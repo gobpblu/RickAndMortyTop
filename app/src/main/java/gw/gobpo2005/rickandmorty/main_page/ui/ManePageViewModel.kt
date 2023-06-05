@@ -14,9 +14,9 @@ class ManePageViewModel(
     private val _characterData = MutableStateFlow<CharacterData?>(null)
     val characterData = _characterData.asStateFlow()
 
-    fun getData() {
+    fun getData(page : Int) {
         handle {
-            val data = interactor.getData()
+            val data = interactor.getData(page)
             _characterData.emit(data)
             Timber.i ("viewModel --->> $data ")
         }

@@ -10,9 +10,8 @@ import timber.log.Timber
 class RickAndMortyRemoteRepository(
     private val api: RickAndMortyApi
 ) : RickAndMortyRepository {
-    override suspend fun getData(): CharacterData {
-        val coroutineScope = CoroutineScope(Dispatchers.Main)
-        val response = api.getCharacterData()
+    override suspend fun getData(page : Int): CharacterData {
+        val response = api.getCharacterData(page)
         Timber.i("data --->>> $response")
         return Converter.fromNetwork(response)
     }

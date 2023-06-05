@@ -8,7 +8,7 @@ object Converter {
         return CharacterData(info = response.info?.let { fromNetwork(it) } ?: DataInfo(
             0, 0, "", ""
         ),
-            result = fromNetworkList(response.result)
+            result = fromNetworkList(response.results)
         )
     }
 

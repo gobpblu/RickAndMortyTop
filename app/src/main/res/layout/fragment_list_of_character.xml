@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_list_of_characters"
     android:layout_width="match_parent"
@@ -7,11 +8,61 @@
     android:background="@color/black"
     tools:context=".main_page.ui.ListOfCharacterFragment">
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerOfCharacter"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="@+id/bottomAppBar"
         tools:listitem="@layout/item_characters" />
 
+        <LinearLayout
+            android:id="@+id/bottomAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:backgroundTint="@color/empty"
+            app:layout_constraintBottom_toBottomOf="@+id/recyclerOfCharacter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-</FrameLayout>
+            <Button
+                android:id="@+id/buttonPrevious"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="30dp"
+                android:background="@drawable/style_for_item"
+                android:text="@string/previous"
+                android:textColor="@color/white"
+                android:textStyle="italic" />
+
+            <Button
+                android:id="@+id/buttonNext"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="40dp"
+                android:background="@drawable/style_for_item"
+                android:text="@string/next"
+                android:textColor="@color/white"
+                android:textStyle="italic" />
+
+        </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#AA000000"
+        android:visibility="gone"
+        tools:visibility="gone">
+
+        <ProgressBar
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:theme="@style/styleProgressBar" />
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
