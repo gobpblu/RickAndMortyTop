@@ -4,4 +4,9 @@
     <style name="styleProgressBar">
         <item name="colorAccent">@color/white</item>
     </style>
+
+
+    <style name="MyHintStyle" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>

@@ -14,11 +14,30 @@ class ManePageViewModel(
     private val _characterData = MutableStateFlow<CharacterData?>(null)
     val characterData = _characterData.asStateFlow()
 
-    fun getData(page : Int) {
+    private val _characterDataName = MutableStateFlow<CharacterData?>(null)
+    val characterDataName = _characterDataName.asStateFlow()
+
+//    private val _nameData = MutableStateFlow<String?>("")
+//    val nameData = _nameData.asStateFlow()
+
+    fun getData(page: Int) {
         handle {
             val data = interactor.getData(page)
             _characterData.emit(data)
-            Timber.i ("viewModel --->> $data ")
+            Timber.i("viewModel from data --->> $data ")
         }
     }
+
+    fun getDataName(name: String) {
+        handle {
+            val dataName = interactor.getDataName(name)
+            _characterDataName.tryEmit(dataName)
+            Timber.i("viewModel from dataName --->> $dataName")
+        }
+    }
+
+//    fun addName(name: String?) {
+//        if (name == null) return
+//        _nameData.value = name
+//    }
 }

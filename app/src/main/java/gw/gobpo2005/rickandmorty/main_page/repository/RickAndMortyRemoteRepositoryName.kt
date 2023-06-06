@@ -5,11 +5,12 @@ import gw.gobpo2005.rickandmorty.main_page.model.CharacterData
 import gw.gobpo2005.rickandmorty.main_page.model.Converter
 import timber.log.Timber
 
-class RickAndMortyRemoteRepository(
+class RickAndMortyRemoteRepositoryName(
     private val api: RickAndMortyApi
-) : RickAndMortyRepository {
-    override suspend fun getData(page: Int): CharacterData {
-        val response = api.getCharacterData(page)
+) : RickAndMortyRepositoryName {
+
+    override suspend fun getDataName(name: String): CharacterData {
+        val response = api.getCharacterName(name)
         Timber.i("data --->>> $response")
         return Converter.fromNetwork(response)
     }

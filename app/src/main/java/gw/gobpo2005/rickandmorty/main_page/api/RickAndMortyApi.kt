@@ -10,4 +10,9 @@ interface RickAndMortyApi {
     suspend fun getCharacterData(
         @Query("page") page: Int
     ): CharacterDataResponse
+
+    @GET("api/character")
+    suspend fun getCharacterName(
+        @Query("name") name : String
+    ):CharacterDataResponse
 }

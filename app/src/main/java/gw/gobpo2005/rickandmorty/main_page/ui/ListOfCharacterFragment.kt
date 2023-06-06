@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.core.view.doOnAttach
 import androidx.core.view.doOnDetach
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import gw.gobpo2005.rickandmorty.R
 import gw.gobpo2005.rickandmorty.common.mvvm.BaseFragment
@@ -28,6 +29,9 @@ class ListOfCharacterFragment : BaseFragment(R.layout.fragment_list_of_character
         onAttachRecycler()
         binding.recyclerOfCharacter.adapter = adapter
         viewModel.getData(page)
+        binding.editTextEmail.doAfterTextChanged { nameOfCharacter ->
+            nameOfCharacter?.toString()?.let { viewModel.getDataName(it) }
+        }
         setOnClickListener()
         setObserves()
     }
@@ -62,6 +66,10 @@ class ListOfCharacterFragment : BaseFragment(R.layout.fragment_list_of_character
         observe(viewModel.isLoading) { loading ->
             binding.progressBar.isVisible = loading
         }
+        observeNullable(viewModel.characterDataName) { characterName ->
+            characterName?.result?.let { it -> showData(it) }
+        }
+
     }
 
     private fun showData(data: List<ResultData>) {
@@ -75,6 +83,7 @@ class ListOfCharacterFragment : BaseFragment(R.layout.fragment_list_of_character
                 viewModel.getData(page)
                 Toast.makeText(requireContext(), "Great!!!!!!$page", Toast.LENGTH_SHORT)
                     .show()
+
             }
             buttonPrevious.setOnClickListener {
                 if (page == 1) {
@@ -88,6 +97,7 @@ class ListOfCharacterFragment : BaseFragment(R.layout.fragment_list_of_character
                 if (page != 1) {
                     page--
                     viewModel.getData(page)
+
                     Toast.makeText(requireContext(), "Great!!!!!!$page", Toast.LENGTH_SHORT)
                         .show()
                 }
