@@ -1,6 +1,6 @@
 package gw.gobpo2005.rickandmorty.main_page.di
 
-import gw.gobpo2005.rickandmorty.main_page.ui.ManePageViewModel
+import gw.gobpo2005.rickandmorty.main_page.ui.MainPageViewModel
 import gw.gobpo2005.rickandmorty.common.di.InjectionModule
 import gw.gobpo2005.rickandmorty.main_page.api.RickAndMortyApi
 import gw.gobpo2005.rickandmorty.main_page.interactor.RickAndMortyInteractor
@@ -18,7 +18,7 @@ object NamePageModule : InjectionModule {
         single<RickAndMortyRepositoryName> { RickAndMortyRemoteRepositoryName(get()) }
         singleOf(::RickAndMortyRemoteRepositoryName) bind RickAndMortyRepositoryName::class
         factoryOf(::RickAndMortyInteractor)
-        factoryOf(::ManePageViewModel)
+        factoryOf(::MainPageViewModel)
 
     }
 }

@@ -2,7 +2,6 @@ package gw.gobpo2005.rickandmorty.main_page.ui
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.core.view.doOnAttach
 import androidx.core.view.doOnDetach
 import androidx.core.view.isVisible
@@ -13,26 +12,35 @@ import gw.gobpo2005.rickandmorty.common.mvvm.BaseFragment
 import gw.gobpo2005.rickandmorty.databinding.FragmentListOfCharacterBinding
 import gw.gobpo2005.rickandmorty.main_page.model.ResultData
 import gw.gobpo2005.rickandmorty.main_page.ui.adapter.CharactersAdapter
+import gw.gobpo2005.rickandmorty.utils.ui.EndlessScrollListener
 import gw.gobpo2005.rickandmorty.utils.viewbinding.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+
 class ListOfCharacterFragment : BaseFragment(R.layout.fragment_list_of_character) {
 
-    private val viewModel: ManePageViewModel by viewModel()
+    private val viewModel: MainPageViewModel by viewModel()
     private val binding: FragmentListOfCharacterBinding by viewBinding()
     private val adapter by lazy { CharactersAdapter() }
-    var page: Int = 1
+
+    private val layoutManager: LinearLayoutManager by lazy {
+        LinearLayoutManager(requireContext())
+    }
+    private val scrollListener: EndlessScrollListener by lazy {
+        EndlessScrollListener(layoutManager) {
+            viewModel.changePage(it)
+        }
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         onAttachRecycler()
         binding.recyclerOfCharacter.adapter = adapter
-        viewModel.getData(page)
+        binding.recyclerOfCharacter.addOnScrollListener(scrollListener)
         binding.editTextEmail.doAfterTextChanged { nameOfCharacter ->
             nameOfCharacter?.toString()?.let { viewModel.getDataName(it) }
         }
-        setOnClickListener()
         setObserves()
     }
 
@@ -54,7 +62,7 @@ class ListOfCharacterFragment : BaseFragment(R.layout.fragment_list_of_character
     private fun onAttachRecycler() {
         with(binding) {
             recyclerOfCharacter.doOnAttach {
-                recyclerOfCharacter.layoutManager = LinearLayoutManager(requireContext())
+                recyclerOfCharacter.layoutManager = layoutManager
             }
         }
     }
@@ -67,16 +75,20 @@ class ListOfCharacterFragment : BaseFragment(R.layout.fragment_list_of_character
             binding.progressBar.isVisible = loading
         }
         observeNullable(viewModel.characterDataName) { characterName ->
-            characterName?.result?.let { it -> showData(it) }
+            scrollListener.reset()
+            characterName?.result?.let { it -> clearAndShowData(it) }
         }
-
     }
 
     private fun showData(data: List<ResultData>) {
         adapter.setData(data)
     }
 
-    private fun setOnClickListener() {
+    private fun clearAndShowData(data: List<ResultData>) {
+        adapter.clearAndSetData(data)
+    }
+
+    /*private fun setOnClickListener() {
         with(binding) {
             buttonNext.setOnClickListener {
                 page++
@@ -104,5 +116,5 @@ class ListOfCharacterFragment : BaseFragment(R.layout.fragment_list_of_character
             }
         }
     }
-
+*/
 }

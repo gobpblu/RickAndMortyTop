@@ -18,38 +18,38 @@
         android:layout_marginTop="80dp"
         tools:listitem="@layout/item_characters" />
 
-    <LinearLayout
-        android:id="@+id/bottomAppBar"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:backgroundTint="@color/empty"
-        app:layout_constraintBottom_toBottomOf="@+id/recyclerOfCharacter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/bottomAppBar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:backgroundTint="@color/empty"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/recyclerOfCharacter"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent">-->
 
-        <Button
-            android:id="@+id/buttonPrevious"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="30dp"
-            android:background="@drawable/style_for_item"
-            android:text="@string/previous"
-            android:textColor="@color/white"
-            android:textStyle="italic"
-            style="?android:attr/buttonBarButtonStyle" />
+<!--        <Button-->
+<!--            android:id="@+id/buttonPrevious"-->
+<!--            android:layout_width="150dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginStart="30dp"-->
+<!--            android:background="@drawable/style_for_item"-->
+<!--            android:text="@string/previous"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textStyle="italic"-->
+<!--            style="?android:attr/buttonBarButtonStyle" />-->
 
-        <Button
-            android:id="@+id/buttonNext"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="40dp"
-            android:background="@drawable/style_for_item"
-            android:text="@string/next"
-            android:textColor="@color/white"
-            android:textStyle="italic"
-            style="?android:attr/buttonBarButtonStyle" />
+<!--        <Button-->
+<!--            android:id="@+id/buttonNext"-->
+<!--            android:layout_width="150dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginStart="40dp"-->
+<!--            android:background="@drawable/style_for_item"-->
+<!--            android:text="@string/next"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textStyle="italic"-->
+<!--            style="?android:attr/buttonBarButtonStyle" />-->
 
-    </LinearLayout>
+<!--    </LinearLayout>-->
 
 
 

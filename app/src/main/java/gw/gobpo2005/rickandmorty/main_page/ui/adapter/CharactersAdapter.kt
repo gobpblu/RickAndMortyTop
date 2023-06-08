@@ -22,6 +22,11 @@ class CharactersAdapter : RecyclerView.Adapter<CharacterViewHolder>() {
     }
 
     fun setData(items: List<ResultData>) {
+        data.addAll(items)
+        notifyDataSetChanged()
+    }
+
+    fun clearAndSetData(items: List<ResultData>) {
         data.clear()
         data.addAll(items)
         notifyDataSetChanged()

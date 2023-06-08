@@ -10,7 +10,7 @@ import gw.gobpo2005.rickandmorty.main_page.interactor.RickAndMortyInteractor
 import org.koin.dsl.bind
 import org.koin.dsl.module
 import retrofit2.Retrofit
-import gw.gobpo2005.rickandmorty.main_page.ui.ManePageViewModel
+import gw.gobpo2005.rickandmorty.main_page.ui.MainPageViewModel
 
 object MainPageModule : InjectionModule {
     override fun onCreate() = module {
@@ -18,7 +18,7 @@ object MainPageModule : InjectionModule {
         single<RickAndMortyRepository> { RickAndMortyRemoteRepository(get()) }
         singleOf(::RickAndMortyRemoteRepository) bind RickAndMortyRepository::class
         factoryOf(::RickAndMortyInteractor)
-        factoryOf(::ManePageViewModel)
+        factoryOf(::MainPageViewModel)
 
     }
 }
