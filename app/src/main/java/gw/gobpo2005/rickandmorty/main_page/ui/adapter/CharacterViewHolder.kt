@@ -7,7 +7,7 @@ import coil.load
 import coil.transform.CircleCropTransformation
 import gw.gobpo2005.rickandmorty.R
 import gw.gobpo2005.rickandmorty.databinding.ItemCharactersBinding
-import gw.gobpo2005.rickandmorty.main_page.model.ResultData
+import gw.gobpo2005.rickandmorty.main_page.model.Hero
 
 class CharacterViewHolder(
     private val binding: ItemCharactersBinding
@@ -18,12 +18,12 @@ class CharacterViewHolder(
         ItemCharactersBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
 
-    fun onBind(item: ResultData) {
+    fun onBind(item: Hero) {
         with(binding) {
             nameOfCharacter.text = item.name
             statusOfCharacter.text = item.status
             speciesOfCharacter.text = item.species
-            locationOfCharacter.text = item.location.name
+            locationOfCharacter.text = item.name
 
             imageViewAvatar.load(item.image) {
                 crossfade(true)

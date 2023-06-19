@@ -1,15 +1,25 @@
-package gw.gobpo2005.rickandmorty.main_page.model
+package gw.gobpo2005.rickandmorty.main_page.model.converter
 
 import gw.gobpo2005.rickandmorty.main_page.api.model.*
+import gw.gobpo2005.rickandmorty.main_page.model.DataInfo
+import gw.gobpo2005.rickandmorty.main_page.model.Hero
+import gw.gobpo2005.rickandmorty.main_page.model.Location
+import gw.gobpo2005.rickandmorty.main_page.model.Origin
 
-object Converter {
+object MainConverter {
 
-    fun fromNetwork(response: CharacterDataResponse): CharacterData {
-        return CharacterData(info = response.info?.let { fromNetwork(it) } ?: DataInfo(
-            0, 0, "", ""
-        ),
-            result = fromNetworkList(response.results)
-        )
+    fun fromNetwork(response: CharacterDataResponse): List<Hero> {
+        return response.results.map {result ->
+            Hero(
+                id =  result.id ?: 0,
+                name =  result.name ?: "",
+                status =  result.status ?: "",
+                species =  result.species ?: "",
+                gender =  result.gender ?: "",
+                image =  result.image ?: "",
+
+            )
+        }
     }
 
     private fun fromNetwork(response: DataInfoResponse): DataInfo {
@@ -21,23 +31,15 @@ object Converter {
         )
     }
 
-    private fun fromNetworkList(response: List<ResultDataResponse>?): List<ResultData> {
+    private fun fromNetworkList(response: List<HeroResponse>?): List<Hero> {
         return response?.map { data ->
-            ResultData(
+            Hero(
                 id = data.id ?: 0,
                 name = data.name ?: "",
                 status = data.status ?: "",
                 species = data.species ?: "",
-                type = data.type ?: "",
                 gender = data.gender ?: "",
-                origin = data.origin?.let
-                { fromNetworkOrigin(it) } ?: Origin("", ""),
-                location = data.location?.let
-                { fromNetworkLocation(it) } ?: Location("", ""),
                 image = data.image ?: "",
-                episode = data.episode,
-                url = data.url ?: "",
-                created = data.created ?: ""
             )
         } ?: emptyList()
     }

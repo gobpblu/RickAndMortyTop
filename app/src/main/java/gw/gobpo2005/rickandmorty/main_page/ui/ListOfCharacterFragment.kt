@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import gw.gobpo2005.rickandmorty.R
 import gw.gobpo2005.rickandmorty.common.mvvm.BaseFragment
 import gw.gobpo2005.rickandmorty.databinding.FragmentListOfCharacterBinding
-import gw.gobpo2005.rickandmorty.main_page.model.ResultData
+import gw.gobpo2005.rickandmorty.main_page.model.Hero
 import gw.gobpo2005.rickandmorty.main_page.ui.adapter.CharactersAdapter
 import gw.gobpo2005.rickandmorty.utils.ui.EndlessScrollListener
 import gw.gobpo2005.rickandmorty.utils.viewbinding.viewBinding
@@ -39,7 +39,11 @@ class ListOfCharacterFragment : BaseFragment(R.layout.fragment_list_of_character
         binding.recyclerOfCharacter.adapter = adapter
         binding.recyclerOfCharacter.addOnScrollListener(scrollListener)
         binding.editTextEmail.doAfterTextChanged { nameOfCharacter ->
-            nameOfCharacter?.toString()?.let { viewModel.getDataName(it) }
+            if (nameOfCharacter.isNullOrEmpty()) {
+                viewModel.getHeroes()
+            } else {
+                nameOfCharacter.toString().let { viewModel.getDataName(it) }
+            }
         }
         setObserves()
     }
@@ -68,8 +72,8 @@ class ListOfCharacterFragment : BaseFragment(R.layout.fragment_list_of_character
     }
 
     private fun setObserves() {
-        observeNullable(viewModel.characterData) { character ->
-            character?.result?.let { it -> showData(it) }
+        observe(viewModel.heroesData) { heroes ->
+            adapter.clearAndSetData(heroes)
         }
         observe(viewModel.isLoading) { loading ->
             binding.progressBar.isVisible = loading
@@ -78,13 +82,17 @@ class ListOfCharacterFragment : BaseFragment(R.layout.fragment_list_of_character
             scrollListener.reset()
             characterName?.result?.let { it -> clearAndShowData(it) }
         }
+        observeNullable(viewModel.characterDataName) { characterName ->
+            scrollListener.reset()
+            characterName?.result?.let { it -> clearAndShowData(it) }
+        }
     }
 
-    private fun showData(data: List<ResultData>) {
+    private fun showData(data: List<Hero>) {
         adapter.setData(data)
     }
 
-    private fun clearAndShowData(data: List<ResultData>) {
+    private fun clearAndShowData(data: List<Hero>) {
         adapter.clearAndSetData(data)
     }
 

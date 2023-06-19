@@ -2,7 +2,7 @@ package gw.gobpo2005.rickandmorty.main_page.api.model
 
 import com.google.gson.annotations.SerializedName
 
-data class ResultDataResponse(
+data class HeroResponse(
     @SerializedName("id")
     val id: Int?,
     @SerializedName("name")
