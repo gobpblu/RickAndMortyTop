@@ -5,7 +5,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface RickAndMortyApi {
-
     @GET("api/character")
     suspend fun getCharacterData(
         @Query("page") page: Int

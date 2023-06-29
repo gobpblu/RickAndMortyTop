@@ -4,7 +4,7 @@ import gw.gobpo2005.rickandmorty.main_page.api.RickAndMortyApi
 import gw.gobpo2005.rickandmorty.main_page.model.Hero
 import gw.gobpo2005.rickandmorty.main_page.model.converter.MainConverter
 
-class MainRemoteRepository(
+class MainRemoteRepositoryImpl(
     private val api: RickAndMortyApi,
 ) : MainRepository {
     override suspend fun getData(page: Int): List<Hero> {

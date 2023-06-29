@@ -1,19 +1,19 @@
 package gw.gobpo2005.rickandmorty.main_page.interactor
 
-import gw.gobpo2005.rickandmorty.main_page.model.CharacterData
-import gw.gobpo2005.rickandmorty.main_page.model.Hero
-import gw.gobpo2005.rickandmorty.main_page.repository.local.MainLocalRepository
-import gw.gobpo2005.rickandmorty.main_page.repository.remote.MainRemoteRepository
-import gw.gobpo2005.rickandmorty.main_page.repository.remote.NameRemoteRepository
+import gw.gobpo2005.rickandmorty.main_page.repository.MainLocalRepositoryImpl
+import gw.gobpo2005.rickandmorty.main_page.repository.remote.MainRemoteRepositoryImpl
+import gw.gobpo2005.rickandmorty.main_page.repository.remote.NameRemoteRepositoryImpl
+import gw.gobpo2005.rickandmorty.main_page.ui.model.HeroUi
+import gw.gobpo2005.rickandmorty.main_page.ui.model.MainConverterUi
 import kotlinx.coroutines.flow.Flow
 
 class MainInteractor(
-    private val remoteRepository: MainRemoteRepository,
-    private val remoteRepositoryName: NameRemoteRepository,
-    private val localRepository: MainLocalRepository,
+    private val remoteRepository: MainRemoteRepositoryImpl,
+    private val remoteRepositoryName: NameRemoteRepositoryImpl,
+    private val localRepository: MainLocalRepositoryImpl,
 ) {
 
-    suspend fun getHeroesFromDb(): Flow<List<Hero>> {
+    suspend fun getHeroesFromDb(): Flow<List<HeroUi>> {
         return localRepository.getHeroes()
     }
 
@@ -22,8 +22,9 @@ class MainInteractor(
         localRepository.insertHeroesToDb(heroes)
     }
 
-    suspend fun getDataName(name: String): CharacterData {
-        return remoteRepositoryName.getDataName(name)
+    suspend fun getDataName(name: String): List<HeroUi> {
+        val data = remoteRepositoryName.getDataName(name).result
+        return MainConverterUi.fromNetwork(data)
     }
 
 //    suspend fun getData(page: Int): CharacterData {

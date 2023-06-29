@@ -4,14 +4,14 @@ import androidx.room.Room
 import gw.gobpo2005.rickandmorty.common.di.InjectionModule
 import gw.gobpo2005.rickandmorty.main_page.api.RickAndMortyApi
 import gw.gobpo2005.rickandmorty.main_page.db.database.AppDataBase
-import gw.gobpo2005.rickandmorty.main_page.repository.remote.MainRemoteRepository
+import gw.gobpo2005.rickandmorty.main_page.repository.remote.MainRemoteRepositoryImpl
 import gw.gobpo2005.rickandmorty.main_page.repository.remote.MainRepository
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import gw.gobpo2005.rickandmorty.main_page.interactor.MainInteractor
-import gw.gobpo2005.rickandmorty.main_page.repository.local.LocalRepository
-import gw.gobpo2005.rickandmorty.main_page.repository.local.MainLocalRepository
-import gw.gobpo2005.rickandmorty.main_page.repository.remote.NameRemoteRepository
+import gw.gobpo2005.rickandmorty.main_page.repository.MainLocalRepository
+import gw.gobpo2005.rickandmorty.main_page.repository.MainLocalRepositoryImpl
+import gw.gobpo2005.rickandmorty.main_page.repository.remote.NameRemoteRepositoryImpl
 import gw.gobpo2005.rickandmorty.main_page.repository.remote.NameRepository
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -26,10 +26,10 @@ object MainPageModule : InjectionModule {
                 .build()
         }
         single { get<Retrofit>().create(RickAndMortyApi::class.java) }
-        singleOf(::MainRemoteRepository) bind MainRepository::class
-        single { NameRemoteRepository(get()) } bind NameRepository::class
+        singleOf(::MainRemoteRepositoryImpl) bind MainRepository::class
+        single { NameRemoteRepositoryImpl(get()) } bind NameRepository::class
         single { get<AppDataBase>().getCharactersDao() }
-        single { MainLocalRepository(get()) } bind LocalRepository::class
+        single { MainLocalRepositoryImpl(get()) } bind MainLocalRepository::class
         factoryOf(::MainInteractor)
         factoryOf(::MainPageViewModel)
 

@@ -2,97 +2,105 @@ package gw.gobpo2005.rickandmorty.main_page.ui
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.doOnAttach
-import androidx.core.view.doOnDetach
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import gw.gobpo2005.rickandmorty.R
 import gw.gobpo2005.rickandmorty.common.mvvm.BaseFragment
 import gw.gobpo2005.rickandmorty.databinding.FragmentListOfCharacterBinding
-import gw.gobpo2005.rickandmorty.main_page.model.Hero
 import gw.gobpo2005.rickandmorty.main_page.ui.adapter.CharactersAdapter
+import gw.gobpo2005.rickandmorty.main_page.ui.model.HeroUi
+import gw.gobpo2005.rickandmorty.utils.replace
 import gw.gobpo2005.rickandmorty.utils.ui.EndlessScrollListener
 import gw.gobpo2005.rickandmorty.utils.viewbinding.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 
 class ListOfCharacterFragment : BaseFragment(R.layout.fragment_list_of_character) {
 
     private val viewModel: MainPageViewModel by viewModel()
     private val binding: FragmentListOfCharacterBinding by viewBinding()
-    private val adapter by lazy { CharactersAdapter() }
+    private val adapter: CharactersAdapter by lazy {
+        CharactersAdapter { item ->
+            replace(MoreInfoCharacterFragment.newInstance(item))
+        }
 
-    private val layoutManager: LinearLayoutManager by lazy {
-        LinearLayoutManager(requireContext())
     }
+
+    private lateinit var layoutManager: LinearLayoutManager
+
     private val scrollListener: EndlessScrollListener by lazy {
         EndlessScrollListener(layoutManager) {
             viewModel.changePage(it)
         }
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        onAttachRecycler()
-        binding.recyclerOfCharacter.adapter = adapter
-        binding.recyclerOfCharacter.addOnScrollListener(scrollListener)
-        binding.editTextEmail.doAfterTextChanged { nameOfCharacter ->
-            if (nameOfCharacter.isNullOrEmpty()) {
-                viewModel.getHeroes()
-            } else {
-                nameOfCharacter.toString().let { viewModel.getDataName(it) }
+        with(binding) {
+            layoutManager = LinearLayoutManager(requireContext())
+
+
+            recyclerOfCharacter.adapter = adapter
+            recyclerOfCharacter.addOnScrollListener(scrollListener)
+            swr.setOnRefreshListener {
+                scrollListener.reset()
+                viewModel.loadHero(1)
             }
+            editTextEmail.doAfterTextChanged { nameOfCharacter ->
+                    nameOfCharacter.toString().let { viewModel.getDataName(it) }
+            }
+            setObserves()
         }
-        setObserves()
+
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        onDetachRecycler()
+        Timber.i("__On destroy")
         activity?.finish()
+
     }
 
-
-    private fun onDetachRecycler() {
-        with(binding) {
-            recyclerOfCharacter.doOnDetach {
-                recyclerOfCharacter.layoutManager = null
-            }
-        }
+    override fun onPause() {
+        super.onPause()
+        binding.recyclerOfCharacter.layoutManager = null
+        Timber.i("__On pause")
     }
 
-    private fun onAttachRecycler() {
-        with(binding) {
-            recyclerOfCharacter.doOnAttach {
-                recyclerOfCharacter.layoutManager = layoutManager
-            }
-        }
+    override fun onStart() {
+        super.onStart()
+        binding.recyclerOfCharacter.layoutManager = layoutManager
+        Timber.i("__On start")
     }
+
 
     private fun setObserves() {
-        observe(viewModel.heroesData) { heroes ->
-            adapter.clearAndSetData(heroes)
-        }
-        observe(viewModel.isLoading) { loading ->
-            binding.progressBar.isVisible = loading
-        }
-        observeNullable(viewModel.characterDataName) { characterName ->
-            scrollListener.reset()
-            characterName?.result?.let { it -> clearAndShowData(it) }
-        }
-        observeNullable(viewModel.characterDataName) { characterName ->
-            scrollListener.reset()
-            characterName?.result?.let { it -> clearAndShowData(it) }
+        with(viewModel) {
+            observe(heroesData) { heroes ->
+                adapter.clearAndSetData(heroes)
+            }
+            observe(isLoading) { loading ->
+                binding.progressBar.isVisible = loading
+                binding.swr.isRefreshing = loading
+            }
+            observe(characterDataName) { characterName ->
+                scrollListener.reset()
+                clearAndShowData(characterName)
+            }
+//        observeNullable(viewModel.characterDataName) { characterName ->
+//            scrollListener.reset()
+//            characterName?.result?.let { it -> clearAndShowData(it) }
+//        }
         }
     }
 
-    private fun showData(data: List<Hero>) {
+    private fun showData(data: List<HeroUi>) {
         adapter.setData(data)
     }
 
-    private fun clearAndShowData(data: List<Hero>) {
+    private fun clearAndShowData(data: List<HeroUi>) {
         adapter.clearAndSetData(data)
     }
 

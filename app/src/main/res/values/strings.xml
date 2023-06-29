@@ -7,4 +7,7 @@
     <string name="previous">previous</string>
     <string name="next">next</string>
     <string name="enter_the_name">Enter the name character</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="back">back</string>
 </resources>

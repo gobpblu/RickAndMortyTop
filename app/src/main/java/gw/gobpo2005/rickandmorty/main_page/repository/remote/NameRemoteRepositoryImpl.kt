@@ -5,7 +5,7 @@ import gw.gobpo2005.rickandmorty.main_page.model.CharacterData
 import gw.gobpo2005.rickandmorty.main_page.model.converter.Converter
 import timber.log.Timber
 
-class NameRemoteRepository(
+class NameRemoteRepositoryImpl(
     private val api: RickAndMortyApi
 ) : NameRepository {
 

@@ -1,12 +1,12 @@
 package gw.gobpo2005.rickandmorty.main_page.db.model
 
 import gw.gobpo2005.rickandmorty.main_page.model.Hero
+import gw.gobpo2005.rickandmorty.main_page.ui.model.HeroUi
 
 object DataBaseConverter {
     fun fromDataBase(heroEntities: List<HeroEntity>) =
         heroEntities.map {
-            Hero(
-                id = it.id,
+            HeroUi(
                 name = it.name,
                 status = it.status,
                 species = it.species,

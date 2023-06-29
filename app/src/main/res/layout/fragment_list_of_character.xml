@@ -10,48 +10,53 @@
     android:background="@color/black"
     tools:context=".main_page.ui.ListOfCharacterFragment">
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerOfCharacter"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swr"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="80dp"
-        tools:listitem="@layout/item_characters" />
+        android:layout_marginTop="80dp">
 
-<!--    <LinearLayout-->
-<!--        android:id="@+id/bottomAppBar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="60dp"-->
-<!--        android:backgroundTint="@color/empty"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/recyclerOfCharacter"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent">-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerOfCharacter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_characters" />
 
-<!--        <Button-->
-<!--            android:id="@+id/buttonPrevious"-->
-<!--            android:layout_width="150dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            android:layout_marginStart="30dp"-->
-<!--            android:background="@drawable/style_for_item"-->
-<!--            android:text="@string/previous"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textStyle="italic"-->
-<!--            style="?android:attr/buttonBarButtonStyle" />-->
-
-<!--        <Button-->
-<!--            android:id="@+id/buttonNext"-->
-<!--            android:layout_width="150dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            android:layout_marginStart="40dp"-->
-<!--            android:background="@drawable/style_for_item"-->
-<!--            android:text="@string/next"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textStyle="italic"-->
-<!--            style="?android:attr/buttonBarButtonStyle" />-->
-
-<!--    </LinearLayout>-->
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/bottomAppBar"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="60dp"-->
+    <!--        android:backgroundTint="@color/empty"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@+id/recyclerOfCharacter"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent">-->
+
+    <!--        <Button-->
+    <!--            android:id="@+id/buttonPrevious"-->
+    <!--            android:layout_width="150dp"-->
+    <!--            android:layout_height="50dp"-->
+    <!--            android:layout_marginStart="30dp"-->
+    <!--            android:background="@drawable/style_for_item"-->
+    <!--            android:text="@string/previous"-->
+    <!--            android:textColor="@color/white"-->
+    <!--            android:textStyle="italic"-->
+    <!--            style="?android:attr/buttonBarButtonStyle" />-->
+
+    <!--        <Button-->
+    <!--            android:id="@+id/buttonNext"-->
+    <!--            android:layout_width="150dp"-->
+    <!--            android:layout_height="50dp"-->
+    <!--            android:layout_marginStart="40dp"-->
+    <!--            android:background="@drawable/style_for_item"-->
+    <!--            android:text="@string/next"-->
+    <!--            android:textColor="@color/white"-->
+    <!--            android:textStyle="italic"-->
+    <!--            style="?android:attr/buttonBarButtonStyle" />-->
+
+    <!--    </LinearLayout>-->
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -60,6 +65,7 @@
         android:layout_height="wrap_content"
         android:background="@color/empty"
 
+        android:hint="@string/enter_the_name"
         android:orientation="vertical"
         app:boxCornerRadiusBottomEnd="20dp"
         app:boxCornerRadiusBottomStart="20dp"
@@ -69,7 +75,6 @@
         app:endIconMode="clear_text"
         app:hintTextAppearance="@style/MyHintStyle"
         app:layout_constraintEnd_toEndOf="parent"
-        android:hint="@string/enter_the_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -77,14 +82,13 @@
             android:id="@+id/editTextEmail"
             android:layout_width="match_parent"
             android:layout_height="65dp"
+            android:background="@drawable/style_for_edit_text"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="8dp"
             android:padding="10dp"
             android:textColor="@color/white"
-            android:drawableStart="@drawable/ic_search"
-            android:background="@drawable/style_for_edit_text"
-            app:counterEnabled="true"
             android:textSize="24sp"
-            android:drawablePadding="8dp"
-            />
+            app:counterEnabled="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <RelativeLayout
